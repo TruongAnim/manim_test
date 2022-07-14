@@ -1,9 +1,7 @@
 #jupyter notebook
 /etc
 /share
-*/media
 */.ipynb_checkpoints
-*.png
 
 #Venv
 pyvenv.cfg
@@ -12,3 +10,5 @@ pyvenv.cfg
 
 #Temp file
 /.idea
+media/
+__pycache__/
