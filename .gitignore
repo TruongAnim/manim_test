@@ -1,0 +1,14 @@
+#jupyter notebook
+/etc
+/share
+*/media
+*/.ipynb_checkpoints
+*.png
+
+#Venv
+pyvenv.cfg
+/Lib
+/Scripts
+
+#Temp file
+/.idea
