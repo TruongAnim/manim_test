@@ -12,3 +12,4 @@ pyvenv.cfg
 /.idea
 media/
 __pycache__/
+/download
