@@ -1,13 +1,14 @@
 ###
 from manim import *
+from common.custom.custom_animation import *
 config.set_width = "80%"
-
 
 SCENE_NAME = "TestSwap"
 
 if __name__ == "__main__":
-    print(__file__)
-    os.system(f"manim -pql {__file__} {SCENE_NAME}")
+    command = f"manim -pql {__file__} {SCENE_NAME}"
+    print(command)
+    os.system(command)
 
 class TestTransform(Scene):
     def construct(self):
