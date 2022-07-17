@@ -78,11 +78,23 @@ part_line = line.get_subcurve(0.3, 0.6)
 
 # Save state and restore state of object
 square = Square().save_state()
-Restore(square) # self.play(Restore(square))
-#=> opposite from generate_target() and MoveToTarget()
+Restore(square)  # self.play(Restore(square))
+# => opposite from generate_target() and MoveToTarget()
 
 # Move a point along the path
-MoveAlongPath(Dot(), part_line) #self.play(MoveAlongPath(Dot(), part_line))
+MoveAlongPath(Dot(), part_line)  # self.play(MoveAlongPath(Dot(), part_line))
 
 # Create a rectangle surround an object
 Rectangle().surround(square)
+
+# Get a gradient color range
+from colour import Color
+
+
+def HSL(hue, saturation=1, lightness=0.5):
+    return Color(hsl=(hue, saturation, lightness))
+
+
+# => just change hue from 0 to 1
+partitions = 100
+colors = [HSL(i / partitions) for i in range(partitions)]
