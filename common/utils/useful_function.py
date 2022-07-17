@@ -73,7 +73,7 @@ line.append_points(another_line.points)
 # Get a point from line
 point = line.point_from_proportion(0.5)
 
-# Get a pa of a line
+# Get a part of a line
 part_line = line.get_subcurve(0.3, 0.6)
 
 # Save state and restore state of object
