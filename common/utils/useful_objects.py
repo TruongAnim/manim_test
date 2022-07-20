@@ -1,6 +1,6 @@
 from manim import *
 
-SCENE_NAME = "TestTable"
+SCENE_NAME = "TestBrace"
 
 if __name__ == "__main__":
     command = f"manim -pql {__file__} {SCENE_NAME}"
@@ -26,3 +26,11 @@ class TestTable(Scene):
         )
         self.add(table)
         cell = table.get_cell([1,2])
+
+class TestBrace(Scene):
+    def setup(self):
+        config.assets_dir = "./assets"
+        square = Square().scale(2)
+        brace = SVGMobject(file_name="bracket").set_color(RED).next_to(square, LEFT)\
+        .stretch_to_fit_height(square.height)
+        self.add(square, brace)
