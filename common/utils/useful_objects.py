@@ -33,4 +33,14 @@ class TestBrace(Scene):
         square = Square().scale(2)
         brace = SVGMobject(file_name="bracket").set_color(RED).next_to(square, LEFT)\
         .stretch_to_fit_height(square.height)
-        self.add(square, brace)
+        brace2 = brace.copy().rotate(PI).next_to(square, RIGHT)
+        self.add(square, brace, brace2)
+
+class TestMatrix(Scene):
+    def setup(self):
+        col = 4
+        row = 5
+        matrix = Matrix(
+            [[i+j*col for i in range(col)] for j in range(row)]
+        )
+        self.add(matrix)
