@@ -4,7 +4,7 @@ from common.custom.custom_animation import *
 
 config.set_width = "80%"
 
-SCENE_NAME = "TestSwap"
+SCENE_NAME = "RotateTransform"
 
 if __name__ == "__main__":
     command = f"manim -pql {__file__} {SCENE_NAME}"
@@ -88,3 +88,46 @@ class TestSwap(Scene):
         self.play(self.G[0].animate.scale(2))
         self.play(self.G[1].animate.scale(0.5))
         self.wait()
+
+class TestReplaceTransform(Scene):
+    def setup(self):
+        pass
+
+    def construct(self):
+        square = Square().shift(LEFT)
+        circle = Circle().shift(RIGHT)
+        self.add(square, circle)
+        self.play(ReplacementTransform(square, circle))
+        self.play(circle.animate.shift(DOWN).set_color(BLUE))
+        self.play(square.animate.shift(UP))
+
+class TestContinueTransform(Scene):
+    def setup(self):
+        pass
+
+    def construct(self):
+        square = Square().shift(LEFT*2)
+        circle = Circle()
+        triangle = Triangle().shift(RIGHT*2)
+
+        self.play(Transform(square, circle),
+                  Transform(circle, triangle),
+                  Transform(triangle, square, path_arc = PI))
+
+class RotateTransform(Scene):
+    def setup(self):
+        pass
+
+    def construct(self):
+        square = Square().shift(LEFT * 2)
+        circle = Circle()
+        triangle = Triangle().shift(RIGHT * 2)
+        anim = [square, circle, triangle]
+
+        for i in range(10):
+            self.play(
+                ApplyFunction(lambda obj: obj.move_to(anim[1].get_center()), anim[0]),
+                ApplyFunction(lambda obj: obj.move_to(anim[2].get_center()), anim[1]),
+                ApplyFunction(lambda obj: obj.move_to(anim[0].get_center()), anim[2], path_arc=PI)
+            )
+            anim = anim[2:] + anim[0:2]
