@@ -39,3 +39,10 @@ class ShinkToEdge(ShinkToPoint):
     ) -> None:
         point = mobject.get_critical_point(edge)
         super().__init__(mobject, point, point_color=point_color, **kwargs)
+
+class ShinkToCenter(ShinkToPoint):
+    def __init__(
+        self, mobject: Mobject, point_color: str = None, **kwargs
+    ) -> None:
+        point = mobject.get_center()
+        super().__init__(mobject, point, point_color=point_color, **kwargs)
