@@ -2,7 +2,7 @@ from manim import *
 from common.custom.custom_animation import *
 from common.custom.custom_rate_func import rate_func_from_bezier
 from common.custom.custom_rate_func import parabola
-from common.utils.custom_range import real_range
+from common.utils.range_utils import real_range
 
 config.assets_dir = "./assets"
 SCENE_NAME = "TestZoomAnimation"

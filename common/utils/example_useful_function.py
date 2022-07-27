@@ -1,4 +1,5 @@
 from manim import *
+from color_utils import interpolate_color_range
 
 SCENE_NAME = "TestFuncion"
 
@@ -24,6 +25,9 @@ class TestFuncion(Scene):
 
 # Get mid color from two color
 mid_color = interpolate_color(RED, BLUE, 0.5)
+
+# Get interpolate of multiple color
+multi_color = interpolate_color_range(RED, GREEN, BLUE, 0.5)
 
 # Get averange color from list
 average_color_ = average_color(*[RED, GREEN, BLUE])
