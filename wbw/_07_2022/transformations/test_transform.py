@@ -4,13 +4,18 @@ from common.custom.custom_animation import *
 
 config.set_width = "80%"
 
-SCENE_NAME = "RotateTransform"
+SCENE_NAME = "TestReplaceTransform1"
 
 if __name__ == "__main__":
     command = f"manim -pql {__file__} {SCENE_NAME}"
     print(command)
     os.system(command)
 
+#Transform(a, b) => b not add to screen, nothing change with b
+# => a will take all property of b.
+
+#ReplacementTransform(a, b) => a fly to b and take all property of b
+# => after that a will be remove from the scene, b will be add
 
 class TestTransform(Scene):
     def construct(self):
@@ -89,17 +94,18 @@ class TestSwap(Scene):
         self.play(self.G[1].animate.scale(0.5))
         self.wait()
 
-class TestReplaceTransform(Scene):
+class TestReplaceTransform1(Scene):
     def setup(self):
         pass
 
     def construct(self):
         square = Square().shift(LEFT)
         circle = Circle().shift(RIGHT)
-        self.add(square, circle)
-        self.play(ReplacementTransform(square, circle))
-        self.play(circle.animate.shift(DOWN).set_color(BLUE))
+        # self.add(square, circle)
+        # self.play(ReplacementTransform(square, circle))
+        self.play(Transform(square, circle))
         self.play(square.animate.shift(UP))
+        self.play(circle.animate.shift(DOWN).set_color(BLUE))
 
 class TestContinueTransform(Scene):
     def setup(self):
@@ -131,3 +137,38 @@ class RotateTransform(Scene):
                 ApplyFunction(lambda obj: obj.move_to(anim[0].get_center()), anim[2], path_arc=PI)
             )
             anim = anim[2:] + anim[0:2]
+
+class TestReplaceTransform2(Scene):
+    def setup(self):
+        pass
+
+    def construct(self):
+        square = Square().shift(LEFT)
+        circle = Circle().shift(RIGHT)
+        dot = Dot().to_edge(RIGHT)
+        # self.add(square, circle, dot)
+        self.play(ReplacementTransform(square, circle))
+        # self.play(Transform(square, circle))
+        self.play(Transform(circle, dot))
+        self.play(Transform(square, dot))
+
+class TestTranform2(Scene):
+    def construct(self):
+        obj = Text("X")
+        t_a = Text("A")
+        t_b = Text("B")
+        t_c = Text("C")
+        t_d = Text("D")
+
+        self.add(obj)
+        self.play(ReplacementTransform(obj, t_a))
+        self.play(ReplacementTransform(obj,t_b)) # <- This not works
+        # self.play(ReplacementTransform(t_a, t_b))
+        # self.play(ReplacementTransform(t_b, t_c))
+        # self.play(ReplacementTransform(t_c, t_d))
+        self.wait()
+        t_grp = VGroup(obj, t_a, t_b, t_c) \
+            .arrange(DOWN) \
+            .shift(RIGHT)
+        self.play(Write(t_grp))
+        self.wait()
