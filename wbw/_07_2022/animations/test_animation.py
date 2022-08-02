@@ -5,11 +5,11 @@ from common.custom.custom_rate_func import parabola
 from common.utils.range_utils import real_range
 
 config.assets_dir = "./assets"
-SCENE_NAME = "TestZoomAnimation"
+SCENE_NAME = "TestRotating"
 DISABLE_CACHE = "--disable_caching"
 
 if __name__ == "__main__":
-    command = f"manim -pqh {__file__} {SCENE_NAME}"
+    command = f"manim -pqp {__file__} {SCENE_NAME}"
     print(command)
     os.system(command)
 
@@ -103,4 +103,123 @@ class TestZoomAnimation(Scene):
         self.play(dot.animate.shift(UP * 3),
                   rate_func=rate_func,
                   run_time=5)
+        self.wait()
+
+class TargetVsCopy(Scene):
+    def construct(self):
+        source_left = Dot()
+        source_right = source_left.copy()
+
+        VGroup(source_left, source_right).arrange(RIGHT, buff=3)
+
+        # Left side - MoveToTarget ----------------
+        source_left.generate_target()
+        # Manupulate the .target attr
+        source_left.target.set_style(
+            fill_color=TEAL,
+            stroke_width=10,
+            stroke_color=ORANGE
+        )
+        source_left.target.scale(7)
+        source_left.target.to_edge(UP)
+        # Right side - Manually ----------------
+        source_right_target = source_right.copy()
+        source_right_target.set_style(
+            fill_color=TEAL,
+            stroke_width=10,
+            stroke_color=ORANGE
+        )
+        source_right_target.scale(7)
+        source_right_target.to_edge(UP)
+
+        # Animations
+        self.add(source_left, source_right)
+        self.play(
+            MoveToTarget(source_left),
+            Transform(source_right, source_right_target),
+            run_time=3
+        )
+        self.wait()
+
+class TestApplyFunction(Scene):
+    def construct(self):
+        source = Dot()
+
+        def custom_func(mob):
+            mob.set_style(
+                fill_color=TEAL,
+                stroke_width=10,
+                stroke_color=ORANGE
+            )
+            mob.scale(7)
+            mob.to_edge(UP)
+            # Don't forget return mob
+            return mob
+
+        self.add(source)
+
+        self.play(
+            ApplyFunction(custom_func, source),
+            run_time=3
+        )
+        self.wait()
+
+class TestClosures(Scene):
+    def construct(self):
+        source = VGroup(Dot(), Square(), Circle(), Text("A")) \
+            .arrange(RIGHT, buff=2)
+
+        self.add(source)
+
+        self.play(
+            ApplyFunction(self.custom_method(scale=7, edge=DOWN), source[0]),  # Dot
+            ApplyFunction(self.custom_method(fill_color=PURPLE), source[1]),  # Square
+            ApplyFunction(self.custom_method(fill_opacity=0), source[2]),  # Circle
+            ApplyFunction(self.custom_method(edge=LEFT), source[3]),  # Text("A")
+            run_time=3
+        )
+        self.wait()
+
+    def custom_method(self,
+                      fill_color=TEAL,
+                      fill_opacity=1,
+                      stroke_width=10,
+                      stroke_color=ORANGE,
+                      scale=3,
+                      edge=UP,
+                      ):
+        def custom_func(mob):
+            mob.set_style(
+                fill_color=fill_color,
+                fill_opacity=fill_opacity,
+                stroke_width=stroke_width,
+                stroke_color=stroke_color,
+            )
+            mob.scale(scale)
+            mob.to_edge(edge)
+            # Don't forget return mob
+            return mob
+
+        # Don't forget return the func
+        return custom_func
+
+class TestRotating(Scene):
+    def construct(self):
+        angles = [10, 30, 60, 90, 120]
+        mobs = VGroup(*[
+            VGroup(MathTex(f"{angle}^\\circ"), Square())
+                      .arrange(DOWN, buff=1)
+            for angle in angles
+        ]).arrange(RIGHT, buff=0.7)
+
+        self.add(mobs)
+        self.play(
+            *[
+                # mob[0] is the MathTex and
+                # mob[1] is the Square()
+                Rotating(mob[1], radians=angle * PI / 180)
+                for mob, angle in zip(mobs, angles)
+            ],
+            run_time=3
+        )
         self.wait()
