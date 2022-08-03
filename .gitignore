@@ -1,7 +1,8 @@
 #jupyter notebook
 /etc
 /share
-*/.ipynb_checkpoints
+.ipynb_checkpoints
+*/.ipynb_checkpoints/*
 
 #Venv
 pyvenv.cfg
@@ -13,3 +14,7 @@ pyvenv.cfg
 media/
 __pycache__/
 /download
+
+# IPython
+profile_default/
+ipython_config.py
