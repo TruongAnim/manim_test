@@ -1,0 +1,8 @@
+<svg width="250" height="150" viewBox="0 0 250 150" xmlns="http://www.w3.org/2000/svg">
+    <polygon points="-10,110 110,110 110,-10" fill="orange" />
+    <circle cx="50" cy="50" r="50" fill="#3c00ee"/>
+    <rect x="20" y="10" height="80" width="100" stroke="#003300" fill="#6ab150" fill-opacity="0.5">
+    </rect>
+    <rect x="20" y="10" height="80" width="100" stroke="#003300" fill="#6ab150" fill-opacity="0.9" transform="matrix(0.6,0,0,0.6,0,0)">
+    </rect>
+</svg>
