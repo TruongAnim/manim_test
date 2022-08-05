@@ -2,9 +2,7 @@
 from manim import *
 from common.custom.custom_animation import *
 
-config.set_width = "80%"
-
-SCENE_NAME = "TestReplaceTransform1"
+SCENE_NAME = "DifferentRotations"
 
 if __name__ == "__main__":
     command = f"manim -pql {__file__} {SCENE_NAME}"
@@ -171,4 +169,14 @@ class TestTranform2(Scene):
             .arrange(DOWN) \
             .shift(RIGHT)
         self.play(Write(t_grp))
+        self.wait()
+
+
+class DifferentRotations(Scene):
+    def construct(self):
+        left_square = Square(color=BLUE, fill_opacity=0.7).shift(2 * LEFT)
+        right_square = Square(color=GREEN, fill_opacity=0.7).shift(2 * RIGHT)
+        self.play(
+            left_square.animate.rotate(PI), Rotate(right_square, angle=PI), run_time=2
+        )
         self.wait()
