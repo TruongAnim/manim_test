@@ -29,12 +29,10 @@ class TestTable(Scene):
 
 class TestBrace(Scene):
     def setup(self):
-        config.assets_dir = "./assets"
-        square = Square().scale(2)
-        brace = SVGMobject(file_name="bracket").set_color(RED).next_to(square, LEFT)\
-        .stretch_to_fit_height(square.height)
-        brace2 = brace.copy().rotate(PI).next_to(square, RIGHT)
-        self.add(square, brace, brace2)
+        square = Square(color=RED).scale(2)
+        brace1 = Brace(square, LEFT)
+        brace2 = Brace(square, RIGHT)
+        self.add(square, brace1, brace2)
 
 class TestMatrix(Scene):
     def setup(self):
