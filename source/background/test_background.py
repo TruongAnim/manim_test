@@ -3,7 +3,7 @@ from manim import *
 SCENE_NAME = "TestBackgroundJpg"
 
 if __name__ == "__main__":
-    command = f"manim -pqp -o green_bg_with_red --disable_caching {__file__} {SCENE_NAME}"
+    command = f"manim -pqm -t -o transparent_png --disable_caching {__file__} {SCENE_NAME}"
     print(command)
     os.system(command)
 
@@ -21,7 +21,7 @@ class TestBackgroundJpg(Scene):
     config.background_color = BLACK
     def setup(self):
         img = ImageMobject("green_bg.jpg")
-        self.add(img)
+        # self.add(img)
         print(config.pixel_width, config.pixel_height)
 
     def construct(self):
