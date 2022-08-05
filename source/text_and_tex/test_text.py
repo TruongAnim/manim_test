@@ -1,7 +1,7 @@
 from manim import *
 import os
 
-SCENE_NAME = "TexVsMathTex"
+SCENE_NAME = "TestTexIndex"
 
 if __name__ == "__main__":
     print(__file__)
@@ -77,3 +77,32 @@ class TestColorMap(Scene):
             }
         )
         self.add(t)
+
+class TestTextIndex(Scene):
+    def construct(self):
+        text = Text("Hello world!")
+        print(text.submobjects)
+        def get_subindexes_from_text(text):
+            return VGroup(*[
+                Text(str(i), font_size=15, font="Times")
+                .next_to(t, DOWN, buff=0.05)
+                for i, t in enumerate(text)
+            ])
+        self.add(text, get_subindexes_from_text(text))
+
+class TestTexIndex(Scene):
+    def construct(self):
+        source_tex = MathTex("a^2+b^2 = c^2")
+
+        def get_sub_indexes(tex, color_tex=True):
+            from itertools import cycle
+            ni = VGroup()
+            colors = cycle([RED, TEAL, GREEN, BLUE, PURPLE])
+            for i in range(len(tex)):
+                c = next(colors)
+                n = Text(f"{i}", color=c).scale(0.3)
+                n.next_to(tex[i], DOWN, buff=0.05)
+                ni.add(n)
+                if color_tex: tex[i].set_color(c)
+            return ni
+        self.add(source_tex, get_sub_indexes(source_tex[0]))

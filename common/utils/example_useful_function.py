@@ -1,7 +1,7 @@
 from manim import *
 from color_utils import interpolate_color_range
 
-SCENE_NAME = "TestFuncion"
+SCENE_NAME = "TestGetIndexes"
 
 if __name__ == "__main__":
     command = f"manim -pql {__file__} {SCENE_NAME}"
@@ -22,6 +22,21 @@ class TestFuncion(Scene):
         self.add(line)
         print(point)
 
+class TestGetIndexes(Scene):
+    def setup(self):
+        from mobject_utils import get_indexes
+        source_tex = MathTex("a^2+b^2 = c^2")
+        group = VGroup(*[
+            Square() for i in range(5)
+        ]).arrange_in_grid(rows= 2)
+        t1 = Table(
+            [["This", "is a"],
+             ["simple", "Table."]],
+            row_labels=[Text("R1"), Text("R2")],
+            col_labels=[Text("C1"), Text("C2")])
+        # self.add(source_tex, get_indexes(source_tex[0], font_size=15))
+        # self.add(group, get_indexes(group, font_size=25))
+        self.add(t1, get_indexes(t1[0]))
 
 # Get mid color from two color
 mid_color = interpolate_color(RED, BLUE, 0.5)
