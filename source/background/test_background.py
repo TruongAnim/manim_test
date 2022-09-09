@@ -3,7 +3,7 @@ from manim import *
 SCENE_NAME = "TestBackgroundJpg"
 
 if __name__ == "__main__":
-    command = f"manim -pqm -t -o transparent_png --disable_caching {__file__} {SCENE_NAME}"
+    command = f"manim -pqh -t -o transparent_png --disable_caching {__file__} {SCENE_NAME}"
     print(command)
     os.system(command)
 

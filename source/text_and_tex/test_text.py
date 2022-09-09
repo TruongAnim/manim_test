@@ -70,13 +70,20 @@ class TexVsMathTex(Scene):
 class TestColorMap(Scene):
     def construct(self):
         t = Tex(
-            "Hello my ", "world",
+            "Hello my 3 ", "world",
             tex_to_color_map={
-                "Hello": RED,
+                "3": RED,
                 "wor": ORANGE
             }
         )
-        self.add(t)
+        t2 = MathTex(
+            "S = { 3 \over 2 }","{ \sqrt {{4}} a ^ 2 }",
+            tex_to_color_map={
+                "4": RED,
+                "wor": ORANGE
+            }
+        )
+        self.add(t2)
 
 class TestTextIndex(Scene):
     def construct(self):
@@ -92,7 +99,8 @@ class TestTextIndex(Scene):
 
 class TestTexIndex(Scene):
     def construct(self):
-        source_tex = MathTex("a^2+b^2 = c^2")
+        source_tex = MathTex(r"\text{Area}=","\sqrt{", "s", "(", "s", "-", "a", ")(",
+                       "s", "-", "b", ")(", "s", "-", "c", ")}","=4.01").scale(0.8)
 
         def get_sub_indexes(tex, color_tex=True):
             from itertools import cycle
@@ -105,4 +113,24 @@ class TestTexIndex(Scene):
                 ni.add(n)
                 if color_tex: tex[i].set_color(c)
             return ni
-        self.add(source_tex, get_sub_indexes(source_tex[0]))
+        self.add(source_tex, get_sub_indexes(source_tex))
+
+class TestTex(Scene):
+    def setup(self):
+        pass
+    def construct(self):
+        from common.utils.mobject_utils import get_indexes
+        color_map = {
+            "h": GREEN,
+            "b": BLUE
+        }
+        pytago1 = MathTex(r"S = {{h \times b} \over 2}", tex_to_color_map=color_map)
+        pytago2 = MathTex(r"S = {3 \over 2}{\sqrt{3}a^2}",
+                          tex_to_color_map=None)
+
+
+        group = VGroup(pytago1)\
+        .arrange(DOWN).shift(UP*2)
+
+        self.add(group)
+        self.add(*[get_indexes(i[4], color_tex=False) for i in group])
